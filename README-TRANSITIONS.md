@@ -525,7 +525,7 @@ This generates a B-Spline transition from composite `pip` to composite `sidebysi
 
 ```python
   from transitions import Composites, Transitions, L, T, R, B
-  from configparser import SafeConfigParser
+  from configparser import ConfigParser
   from out_of_scope import update_my_compositor
 
   # set frame size

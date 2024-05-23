@@ -2,10 +2,10 @@
 ##
 ## entrypoint for the docker images
 
-if [ ! -f /.dockerenv ] && [ ! -f /.dockerinit ]; then
-  >&2 echo "WARNING: this script should be only run inside docker!!"
-  exit 1
-fi
+#if ([ ! -f /.dockerenv ] && [ ! -f /.dockerinit ]) || [ "$container" == "" ] ; then
+#  >&2 echo "WARNING: this script should be only run inside docker!!"
+#  exit 1
+#fi
 
 # shellcheck disable=SC2154
 if [[ ! -z $gid ]] && [[ ! -z $uid ]]; then

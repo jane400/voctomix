@@ -1,5 +1,5 @@
 import os.path
-from configparser import SafeConfigParser
+from configparser import ConfigParser
 
 __all__ = ['Config']
 
@@ -12,5 +12,5 @@ files = [
     os.path.expanduser('~/.voctopanel.ini'),
 ]
 
-Config = SafeConfigParser()
+Config = ConfigParser()
 Config.read(files)
