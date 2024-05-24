@@ -44,6 +44,7 @@ class Voctogui(object):
         self.log = logging.getLogger('Voctogui')
         from lib.args import Args
         from lib.ui import Ui
+        from lib.mixer_panel import MixerPanel
 
         # Load UI file
         path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'ui/voctogui.ui')
