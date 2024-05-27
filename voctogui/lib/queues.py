@@ -5,21 +5,22 @@ import json
 from gi.repository import Gtk, Gst, GLib
 
 from lib.config import Config
-from lib.uibuilder import UiBuilder
 import lib.connection as Connection
+
+from .info_windows import QueueWindow
 
 # time interval to re-fetch queue timings
 TIMER_RESOLUTION = 1.0
 
 class QueuesWindowController():
 
-    def __init__(self,uibuilder):
+    def __init__(self, queue_win: QueueWindow):
         self.log = logging.getLogger('QueuesWindowController')
 
         # get related widgets
-        self.win = uibuilder.get_check_widget('queue_win')
-        self.store = uibuilder.get_check_widget('queue_store')
-        self.scroll = uibuilder.get_check_widget('queue_scroll')
+        self.win = queue_win
+        self.store = queue_win.queue_store
+        self.scroll = queue_win.queue_scroll
 
         # remember row iterators
         self.iterators = None

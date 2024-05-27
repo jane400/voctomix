@@ -12,10 +12,10 @@ from vocto.composite_commands import CompositeCommand
 
 
 class PresetController(object):
-    def __init__(self, win, preview_controller, uibuilder):
+    def __init__(self, win, preview_controller):
         self.log = logging.getLogger("PresetController")
-        self.box = uibuilder.find_widget_recursive(win, "preset_box")
-        self.toolbar = uibuilder.find_widget_recursive(win, "preset_toolbar")
+        self.box = win.box_mixer_panel.preset_box
+        self.toolbar = win.box_mixer_panel.preset_toolbar
         self.preview_controller = preview_controller
 
         keybindings = Config.getPresetKeybindings()

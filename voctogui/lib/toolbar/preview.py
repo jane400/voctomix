@@ -9,13 +9,11 @@ import lib.connection as Connection
 from lib.config import Config
 from vocto.composite_commands import CompositeCommand
 from lib.toolbar.buttons import Buttons
-from lib.uibuilder import UiBuilder
-
 
 class PreviewToolbarController(object):
     """Manages Accelerators and Clicks on the Preview Composition Toolbar-Buttons"""
 
-    def __init__(self, win, uibuilder):
+    def __init__(self, win):
         self.initialized = False
 
         self.log = logging.getLogger('PreviewToolbarController')
@@ -28,17 +26,16 @@ class PreviewToolbarController(object):
         self.composites = Buttons(Config.getToolbarComposites())
         self.mods = Buttons(Config.getToolbarMods())
 
-        toolbar_composite = uibuilder.find_widget_recursive(
-            win, 'toolbar_preview_composite')
-        toolbar_a = uibuilder.find_widget_recursive(win, 'toolbar_preview_a')
-        toolbar_b = uibuilder.find_widget_recursive(win, 'toolbar_preview_b')
-        toolbar_mod = uibuilder.find_widget_recursive(
-            win, 'toolbar_preview_mod')
+        mixer_panel = win.box_mixer_panel
+        toolbar_composite = mixer_panel.toolbar_preview_composite
+        toolbar_a = mixer_panel.toolbar_preview_a
+        toolbar_b = mixer_panel.toolbar_preview_b
+        toolbar_mod = mixer_panel.toolbar_preview_mod
 
-        self.frame_b = uibuilder.find_widget_recursive(win, 'frame_preview_b')
+        self.frame_b = mixer_panel.frame_preview_b
 
         # hide modify box if not needed
-        box_modify = uibuilder.find_widget_recursive(win, 'box_preview_modify')
+        box_modify = mixer_panel.box_preview_modify
         if not Config.getToolbarMods():
             box_modify.hide()
             box_modify.set_no_show_all(True)

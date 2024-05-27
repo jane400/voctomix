@@ -8,7 +8,7 @@ from gi.repository import Gtk, GLib
 import lib.connection as Connection
 
 from lib.config import Config
-
+from lib.mixer_panel import MixerPanel
 
 class BlinderToolbarController(object):
     """Manages Accelerators and Clicks on the Composition Toolbar-Buttons"""
@@ -16,15 +16,14 @@ class BlinderToolbarController(object):
     # set resolution of the blink timer in seconds
     timer_resolution = 1.0
 
-    def __init__(self, win, uibuilder):
+    def __init__(self, mixer_panel: MixerPanel):
         self.log = logging.getLogger('BlinderToolbarController')
-        self.toolbar = uibuilder.find_widget_recursive(win, 'toolbar_blinder')
+        self.toolbar = mixer_panel.toolbar_blinder
 
-        live_button = uibuilder.find_widget_recursive(self.toolbar, 'stream_live')
-        blind_button = uibuilder.find_widget_recursive(
-            self.toolbar, 'stream_blind')
-        blinder_box = uibuilder.find_widget_recursive(
-            win, 'box_blinds')
+
+        live_button = mixer_panel.stream_live
+        blind_button = mixer_panel.stream_blind
+        blinder_box = mixer_panel.box_blinds
 
         blind_button_pos = self.toolbar.get_item_index(blind_button)
 

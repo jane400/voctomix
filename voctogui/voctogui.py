@@ -43,21 +43,11 @@ class Voctogui(object):
     def __init__(self):
         self.log = logging.getLogger('Voctogui')
         from lib.args import Args
-        from lib.ui import Ui
-        from lib.mixer_panel import MixerPanel
-
-        # Load UI file
-        path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'ui/voctogui.ui')
-        self.log.info('Loading ui-file from file %s', path)
-        if os.path.isfile(path):
-            self.ui = Ui(path)
-        else:
-            raise Exception("Can't find any .ui-Files to use in {}".format(path))
+        from lib.main_window import MainWindow
 
         #
         # search for a .css style sheet file and load it
         #
-
         css_provider = Gtk.CssProvider()
         context = Gtk.StyleContext()
 
@@ -74,7 +64,7 @@ class Voctogui(object):
             Gtk.STYLE_PROVIDER_PRIORITY_USER
         )
 
-        self.ui.setup()
+        self.ui = MainWindow()
 
     def run(self):
         self.log.info('Setting UI visible')

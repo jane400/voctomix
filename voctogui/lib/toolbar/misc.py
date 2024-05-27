@@ -9,20 +9,20 @@ import lib.connection as Connection
 class MiscToolbarController(object):
     """Manages Accelerators and Clicks Misc buttons"""
 
-    def __init__(self, win, uibuilder, queues_controller, ports_controller, video_display):
+    def __init__(self, win, queues_controller, ports_controller, video_display):
         self.win = win
         self.log = logging.getLogger('MiscToolbarController')
-        self.toolbar = uibuilder.find_widget_recursive(win, 'toolbar_main')
+        self.toolbar = win.toolbar_main
 
         # Accelerators
         accelerators = Gtk.AccelGroup()
         win.add_accel_group(accelerators)
 
-        closebtn = uibuilder.find_widget_recursive(self.toolbar, 'close')
+        closebtn = win.close
         closebtn.set_visible(Config.getShowCloseButton())
         closebtn.connect('clicked', self.on_closebtn_clicked)
 
-        fullscreenbtn = uibuilder.find_widget_recursive(self.toolbar, 'fullscreen')
+        fullscreenbtn = win.fullscreen
         fullscreenbtn.set_visible(Config.getShowFullScreenButton())
         fullscreenbtn.connect('clicked', self.on_fullscreenbtn_clicked)
         key, mod = Gtk.accelerator_parse('F11')
@@ -30,7 +30,7 @@ class MiscToolbarController(object):
                                key, mod, Gtk.AccelFlags.VISIBLE)
         self.fullscreen_button = fullscreenbtn
 
-        mutebtn = uibuilder.find_widget_recursive(self.toolbar, 'mute_button')
+        mutebtn = win.mute_button
         if Config.getPlayAudio():
             mutebtn.set_active(True)
             mutebtn.connect('clicked', self.on_mutebtn_clicked)
@@ -39,12 +39,12 @@ class MiscToolbarController(object):
             mutebtn.set_no_show_all(True)
             mutebtn.hide()
 
-        queues_button = uibuilder.find_widget_recursive(self.toolbar, 'queue_button')
+        queues_button = win.queue_button
         queues_button.set_visible(Config.getShowQueueButton())
         queues_button.connect('toggled', self.on_queues_button_toggled)
         self.queues_controller = queues_controller
 
-        ports_button = uibuilder.find_widget_recursive(self.toolbar, 'ports_button')
+        ports_button = win.ports_button
         ports_button.set_visible(Config.getShowPortButton())
         ports_button.connect('toggled', self.on_ports_button_toggled)
         self.ports_controller = ports_controller

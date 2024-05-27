@@ -11,9 +11,21 @@ import lib.connection as Connection
 from lib.config import Config
 from vocto.port import Port
 
+from .helpers import with_ui_path
+from .audioleveldisplay import AudioLevelDisplay
+
+@Gtk.Template(filename=with_ui_path('audio.ui'))
+class WidgetAudioDisplay(Gtk.Frame):
+    __gtype_name__ = "VoctoAudioDisplay"
+
+    audio_label: Gtk.Label = Gtk.Template.Child()
+    audio_level_display: AudioLevelDisplay = Gtk.Template.Child()
+    audio_level: Gtk.Scale = Gtk.Template.Child()
+
+
 class AudioDisplay(object):
 
-    def __init__(self, audio_box, source, uibuilder, has_volume=True):
+    def __init__(self, audio_box, source: str, has_volume=True):
         self.log = logging.getLogger('VideoPreviewsController')
         self.source = source
         self.panel = None
@@ -23,23 +35,19 @@ class AudioDisplay(object):
         if source in Config.getSources():
             self.audio_streams = Config.getAudioStreams().get_source_streams(source)
             for name, stream in self.audio_streams.items():
-                self.panels[name] = self.createAudioPanel(
-                    name, audio_box, has_volume, uibuilder)
+                self.panels[name] = self.createAudioPanel(name, audio_box, has_volume)
         else:
-            self.panel = self.createAudioPanel(source, audio_box, has_volume, uibuilder)
+            self.panel = self.createAudioPanel(source, audio_box, has_volume)
 
-    def createAudioPanel(self, name, audio_box, has_volume, uibuilder):
-        audio = uibuilder.load_check_widget('audio',
-                                            os.path.dirname(uibuilder.uifile) +
-                                            "/audio.ui")
+    def createAudioPanel(self, name: str, audio_box, has_volume):
+        audio = WidgetAudioDisplay(name="audio")
         audio_box.pack_start(audio, fill=False,
                              expand=False, padding=0)
-        audio_label = uibuilder.find_widget_recursive(audio, 'audio_label')
-        audio_label.set_label(name.upper())
+        #audio.audio_label.set_label(name.upper())
 
-        self.init_volume_slider(name, audio, has_volume, uibuilder)
+        self.init_volume_slider(name, audio, has_volume)
 
-        return {"level": uibuilder.find_widget_recursive(audio, 'audio_level_display')}
+        return {"level": audio.audio_level_display}
 
     def callback(self, rms, peak, decay):
         if self.audio_streams:
@@ -55,9 +63,8 @@ class AudioDisplay(object):
         elif self.panel:
             self.panel["level"].level_callback(rms, peak, decay)
 
-    def init_volume_slider(self, name, audio_box, has_volume, uibuilder):
-        volume_slider = uibuilder.find_widget_recursive(audio_box,
-                                                        'audio_level')
+    def init_volume_slider(self, name, audio, has_volume):
+        volume_slider = audio.audio_level
 
         if has_volume:
             volume_signal = volume_slider.connect('value-changed',

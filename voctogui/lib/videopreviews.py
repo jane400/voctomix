@@ -8,6 +8,7 @@ from configparser import NoOptionError
 from gi.repository import Gtk, Gdk, GObject
 from lib.videodisplay import VideoDisplay
 from lib.audiodisplay import AudioDisplay
+from lib.widgetpreview import WidgetPreview
 import lib.connection as Connection
 
 from lib.config import Config
@@ -17,7 +18,7 @@ from vocto.port import Port
 class VideoPreviewsController(object):
     """Displays Video-Previews and selection Buttons for them"""
 
-    def __init__(self, video_box, audio_box, win, uibuilder):
+    def __init__(self, video_box, audio_box, win):
         self.log = logging.getLogger('VideoPreviewsController')
 
         self.win = win
@@ -49,18 +50,16 @@ class VideoPreviewsController(object):
         # connect event-handler and request initial state
         Connection.send('get_video')
 
-    def addPreview(self, uibuilder, source, port, has_volume=True):
+    def addPreview(self, source, port, has_volume=True):
 
         self.log.info('Initializing video preview %s at port %d', source, port)
 
         mix_audio_display = None
 
         if source in Config.getAudioSources() and Config.getAudioStreams().get_source_streams(source):
-            mix_audio_display = AudioDisplay(self.audio_box, source, uibuilder, has_volume)
+            mix_audio_display = AudioDisplay(self.audio_box, source, has_volume)
         if source in Config.getVideoSources(internal=True):
-            video = uibuilder.load_check_widget('video',
-                                                os.path.dirname(uibuilder.uifile) +
-                                                "/widgetpreview.ui")
+            video = WidgetPreview(name="video")
             video.set_size_request(*self.previewSize)
             self.video_box.pack_start(video, fill=False,
                                    expand=False, padding=0)

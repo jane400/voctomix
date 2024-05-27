@@ -6,7 +6,6 @@ from gi.repository import Gtk
 import lib.connection as Connection
 
 from lib.config import Config
-from lib.uibuilder import UiBuilder
 from lib.toolbar.widgets import Widgets
 from datetime import datetime, timedelta
 from vocto.command_helpers import quote, dequote, str2bool
@@ -14,7 +13,7 @@ from vocto.command_helpers import quote, dequote, str2bool
 class OverlayToolbarController(object):
     """Manages Accelerators and Clicks on the Overlay Composition Toolbar-Buttons"""
 
-    def __init__(self, win, uibuilder):
+    def __init__(self, win):
         self.initialized = False
 
         self.log = logging.getLogger('OverlayToolbarController')
@@ -27,26 +26,25 @@ class OverlayToolbarController(object):
             widgets = Widgets(Config.getToolbarInsert())
 
             # connect to inserts selection combo box
-            self.inserts = uibuilder.get_check_widget('inserts')
-            self.inserts_store = uibuilder.get_check_widget('insert-store')
+            self.inserts = win.box_mixer_panel.inserts
+            self.inserts_store = win.box_mixer_panel.insert_store
             self.inserts.connect('changed', self.on_inserts_changed)
 
             # connect to INSERT toggle button
-            self.insert = uibuilder.get_check_widget('insert')
+            self.insert = win.box_mixer_panel.insert
             widgets.add(self.insert, 'insert', accelerators, self.on_insert_toggled, signal='toggled' )
 
-            self.update_inserts = uibuilder.get_check_widget('update-inserts')
+            self.update_inserts = win.box_mixer_panel.update_inserts
             widgets.add(self.update_inserts, 'update', accelerators, self.update_overlays)
 
             # initialize to AUTO-OFF toggle button
-            self.autooff = uibuilder.get_check_widget('insert-auto-off')
+            self.autooff = win.box_mixer_panel.insert_auto_off
             self.autooff.set_visible(Config.getOverlayUserAutoOff())
             self.autooff.set_active(Config.getOverlayAutoOff())
             widgets.add(self.autooff, 'auto-off', accelerators)
 
             # remember overlay description label
-            self.overlay_description = uibuilder.get_check_widget(
-                'overlay-description')
+            self.overlay_description = win.box_mixer_panel.overlay_description
 
             # initialize our overlay list until we get one from the core
             self.overlays = []
@@ -59,10 +57,10 @@ class OverlayToolbarController(object):
             # call core for a list of available overlays
             self.update_overlays()
             # show insert tool bar
-            uibuilder.get_check_widget('box_insert').show()
+            win.box_mixer_panel.box_insert.show()
         else:
             # hide insert tool bar
-            uibuilder.get_check_widget('box_insert').hide()
+            win.box_mixer_panel.box_insert.hide()
 
         # Hint: self.initialized will be set to True in response to 'get_overlay'
 

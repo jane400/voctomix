@@ -5,8 +5,8 @@ import json
 from gi.repository import Gtk, Gst, GLib
 
 from lib.config import Config
-from lib.uibuilder import UiBuilder
 import lib.connection as Connection
+from .info_windows import PortsWindow
 from vocto.port import Port
 
 # time interval to re-fetch queue timings
@@ -19,14 +19,14 @@ COLOR_ERROR = ("white", "red")
 
 class PortsWindowController():
 
-    def __init__(self, uibuilder):
+    def __init__(self, ports_win: PortsWindow):
         self.log = logging.getLogger('QueuesWindowController')
 
         # get related widgets
-        self.win = uibuilder.get_check_widget('ports_win')
-        self.store = uibuilder.get_check_widget('ports_store')
-        self.scroll = uibuilder.get_check_widget('ports_scroll')
-        self.title = uibuilder.get_check_widget('ports_title')
+        self.win = ports_win
+        self.store = ports_win.ports_store
+        self.scroll = ports_win.ports_scroll
+        self.title = ports_win.ports_title
         self.title.set_title("VOC2CORE {}".format(Config.getHost()))
         # remember row iterators
         self.iterators = None

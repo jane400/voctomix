@@ -8,13 +8,12 @@ import lib.connection as Connection
 from lib.config import Config
 from vocto.composite_commands import CompositeCommand
 from lib.toolbar.buttons import Buttons
-from lib.uibuilder import UiBuilder
 
 
 class MixToolbarController(object):
     """Manages Accelerators and Clicks on the Preview Composition Toolbar-Buttons"""
 
-    def __init__(self, win, uibuilder, preview_controller, overlay_controller):
+    def __init__(self, win, preview_controller, overlay_controller):
         self.initialized = False
         self.preview_controller = preview_controller
         self.overlay_controller = overlay_controller
@@ -25,8 +24,8 @@ class MixToolbarController(object):
 
         self.mix = Buttons(Config.getToolbarMix())
 
-        self.toolbar_composites = uibuilder.find_widget_recursive(win, 'toolbar_mix')
-        self.toolbar_presets = uibuilder.find_widget_recursive(win, 'toolbar_mix1')
+        self.toolbar_composites = win.box_mixer_panel.toolbar_mix
+        self.toolbar_presets = win.box_mixer_panel.toolbar_mix1
 
         self.mix.create(self.toolbar_composites, accelerators,
                         self.on_btn_clicked, radio=False)
