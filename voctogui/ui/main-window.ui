@@ -1,13 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
+  <object class="VoctoImage" id="img-logo">
+    <property name="path-file">logo.svg</property>
+  </object>
+  <object class="VoctoImage" id="img-ports">
+    <property name="tooltip_text" translatable="yes">Show TCP ports of inputs and outputs</property>
+    <property name="path-file">ports.svg</property>
+  </object>
+  <object class="VoctoImage" id="img-voc">
+    <property name="tooltip_text" translatable="yes">VOC2MIX - VOC2GUI
 
+Full-HD Software Live-Video-Mixer in python
+
+To get in touch with us we'd ask to join #voctomix on the hackint IRC network, mail to voc AT c3voc DOT de or meet us on one of the many conferences we're at. You may also want to watch MaZderMinds talk about Voctomix and a presentation some of us gave about C3VOCs video infrastructure.
+
+https://c3voc.de/
+https://github.com/voc/voctomix </property>
+    <property name="path-file">voc2.svg</property>
+  </object>
+  <object class="VoctoImage" id="img-queues">
+    <property name="tooltip_text" translatable="yes">Show queues' filling levels</property>
+    <property name="path-file">queues.svg</property>
+  </object>
   <template class="VoctoMainWindow" parent="GtkWindow">
     <property name="name">main</property>
     <property name="can-focus">False</property>
     <property name="title" translatable="yes">Voctomix GUI</property>
     <property name="default-width">1280</property>
     <property name="default-height">720</property>
-    <property name="icon">voc.svg</property>
     <child>
       <object class="GtkBox" id="box_main">
         <property name="visible">True</property>
@@ -76,7 +96,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="VoctoInfoQueueWindow" id="queue_win"></object>
+                      <object class="VoctoInfoQueueWindow" id="queue_win"/>
                       <packing>
                         <property name="expand">False</property>
                         <property name="fill">True</property>
@@ -133,7 +153,7 @@
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="label">voctomix2</property>
-                        <!--<property name="icon-widget">img-voc</property>-->
+                        <property name="icon-widget">img-voc</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -148,7 +168,7 @@
                         <property name="resize-mode">immediate</property>
                         <property name="label" translatable="yes">Logo</property>
                         <property name="use-underline">True</property>
-                        <!--<property name="icon-widget">img-logo</property>-->
+                        <property name="icon-widget">img-logo</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -172,7 +192,7 @@
                         <property name="can-focus">False</property>
                         <property name="no-show-all">True</property>
                         <property name="label">Ports</property>
-                        <!--<property name="icon-widget">img-ports</property>-->
+                        <property name="icon-widget">img-ports</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -185,7 +205,7 @@
                         <property name="can-focus">False</property>
                         <property name="no-show-all">True</property>
                         <property name="label">Queues</property>
-                        <!--<property name="icon-widget">img-queues</property>-->
+                        <property name="icon-widget">img-queues</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -273,3 +293,4 @@ Key: 'Alt+F4'</property>
     </child>
   </template>
 </interface>
+

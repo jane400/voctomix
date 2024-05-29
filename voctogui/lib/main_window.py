@@ -23,6 +23,10 @@ from .info_windows import PortsWindow, QueueWindow
 
 from vocto.port import Port
 
+from .image import UiImage # this is loaded here on purpose
+# This wrapps GtkImage but with our path-handling. This
+# will sadly break graphical editors showing our images,
+# but /shrug
 
 @Gtk.Template(filename=with_ui_path('main-window.ui'))
 class MainWindow(Gtk.Window):
