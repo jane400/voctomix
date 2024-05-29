@@ -22,7 +22,7 @@ class MiscToolbarController(object):
         closebtn.set_visible(Config.getShowCloseButton())
         closebtn.connect('clicked', self.on_closebtn_clicked)
 
-        fullscreenbtn = win.fullscreen
+        fullscreenbtn = win.fullscreen_button
         fullscreenbtn.set_visible(Config.getShowFullScreenButton())
         fullscreenbtn.connect('clicked', self.on_fullscreenbtn_clicked)
         key, mod = Gtk.accelerator_parse('F11')

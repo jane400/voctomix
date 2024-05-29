@@ -48,7 +48,7 @@ class MainWindow(Gtk.Window):
     # TODO: Split out
     toolbar_main: Gtk.Toolbar = Gtk.Template.Child()
     close: Gtk.ToolButton = Gtk.Template.Child()
-    fullscreen: Gtk.ToggleToolButton = Gtk.Template.Child()
+    fullscreen_button: Gtk.ToggleToolButton = Gtk.Template.Child(name="fullscreen")
     mute_button: Gtk.ToggleToolButton = Gtk.Template.Child()
     queue_button: Gtk.ToggleToolButton = Gtk.Template.Child()
     ports_button: Gtk.ToggleToolButton = Gtk.Template.Child()
